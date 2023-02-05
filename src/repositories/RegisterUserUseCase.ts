@@ -9,6 +9,10 @@ export class RegisterUserUseCase {
   }
 
   async execute(createUser: CreateUser): Promise<CreatedUser> {
+    // validate email
+    if (!createUser.email.includes("@")) {
+      throw new Error("Invalid email")
+    }
     return this.userRepository.save(createUser)
   }
 }
