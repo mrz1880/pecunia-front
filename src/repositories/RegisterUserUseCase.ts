@@ -1,14 +1,14 @@
-import type { CreatedUser, CreateUser } from "../Interfaces/User";
-import type { UserRepository } from "@/repositories/interfaces/UserRepository";
+import type { CreatedUser, CreateUser } from "../Interfaces/User"
+import type { UserRepository } from "@/repositories/interfaces/UserRepository"
 
 export class RegisterUserUseCase {
-  private userRepository: UserRepository;
+  private userRepository: UserRepository
 
   constructor(userRepository: UserRepository) {
-    this.userRepository = userRepository;
+    this.userRepository = userRepository
   }
 
   async execute(createUser: CreateUser): Promise<CreatedUser> {
-    return this.userRepository.save(createUser);
+    return this.userRepository.save(createUser)
   }
 }

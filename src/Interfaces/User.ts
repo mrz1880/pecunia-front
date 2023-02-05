@@ -1,9 +1,9 @@
 export interface CreateUser {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 export interface CreatedUser {
-  id: number;
-  email: string;
+  id: number
+  email: string
 }
