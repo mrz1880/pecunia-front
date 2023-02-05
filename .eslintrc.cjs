@@ -1,9 +1,10 @@
 /* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution')
-
+ 
 module.exports = {
   root: true,
   extends: [
+    'standard',
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     '@vue/eslint-config-typescript',
@@ -13,4 +14,3 @@ module.exports = {
     ecmaVersion: 'latest',
   },
 }
-
