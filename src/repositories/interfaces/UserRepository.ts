@@ -1,5 +1,5 @@
-import type { CreateUser } from "../../Interfaces/User"
+import type { CreatedUser, CreateUser } from "../../Interfaces/User"
 
 export interface UserRepository {
-  save(createUser: CreateUser): { id: number; email: string }
+  save(createUser: CreateUser): CreatedUser
 }
