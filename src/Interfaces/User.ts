@@ -3,7 +3,6 @@ export interface CreateUser {
   password: string
 }
 
-export interface CreatedUser {
+export type CreatedUser = Omit<CreateUser, "password"> & {
   id: number
-  email: string
 }
