@@ -3,14 +3,9 @@ import type {
   CreateUser,
   LoginUser,
   Tokens,
+  User,
 } from "../Interfaces/User"
 import type { UserRepository } from "./interfaces/UserRepository"
-
-interface User {
-  id: number
-  email: string
-  password: string
-}
 
 export class InMemoryUserRepository implements UserRepository {
   users: User[] = []
@@ -43,5 +38,13 @@ export class InMemoryUserRepository implements UserRepository {
       accessToken: "accessToken" + user.email,
       refreshToken: "refreshToken" + user.email,
     }
+  }
+
+  async findById(userId: number): Promise<User> {
+    const user = this.users.find((user) => user.id === userId)
+    if (!user) {
+      throw new Error("User not found")
+    }
+    return user
   }
 }
