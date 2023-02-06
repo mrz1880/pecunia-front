@@ -1,4 +1,9 @@
-import type { CreatedUser, CreateUser } from "../Interfaces/User"
+import type {
+  CreatedUser,
+  CreateUser,
+  LoginUser,
+  Tokens,
+} from "../Interfaces/User"
 import type { UserRepository } from "./interfaces/UserRepository"
 
 interface User {
@@ -23,5 +28,20 @@ export class InMemoryUserRepository implements UserRepository {
     }
     this.users.push({ password, ...user })
     return user
+  }
+
+  async login(loginUser: LoginUser): Promise<Tokens> {
+    const user = this.users.find(
+      (user) =>
+        user.email === loginUser.email && user.password === loginUser.password
+    )
+    if (!user) {
+      throw new Error("Invalid credentials")
+    }
+
+    return {
+      accessToken: "accessToken" + user.email,
+      refreshToken: "refreshToken" + user.email,
+    }
   }
 }

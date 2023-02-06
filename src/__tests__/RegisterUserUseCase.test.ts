@@ -1,5 +1,5 @@
 import { InMemoryUserRepository } from "../repositories/InMemoryUserRepository"
-import { RegisterUserUseCase } from "../repositories/RegisterUserUseCase"
+import { RegisterUserUseCase } from "../UseCases/RegisterUserUseCase"
 import { expect } from "vitest"
 
 describe("Register User Use Case", () => {
