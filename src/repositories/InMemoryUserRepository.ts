@@ -1,13 +1,19 @@
 import type { CreatedUser, CreateUser } from "../Interfaces/User"
 import type { UserRepository } from "./interfaces/UserRepository"
 
-export class InMemoryUserRepository implements UserRepository {
-  users: CreatedUser[] = []
+interface User {
+  id: number
+  email: string
+  password: string
+}
 
-  save(createUser: CreateUser) {
-    const user = {
+export class InMemoryUserRepository implements UserRepository {
+  users: User[] = []
+
+  async save(createUser: CreateUser): Promise<CreatedUser> {
+    const { password, ...user } = {
       id: this.users.length + 1,
-      email: createUser.email,
+      ...createUser,
     }
     const userAlreadyRegistered = this.users.find(
       (user) => user.email === createUser.email
@@ -15,7 +21,7 @@ export class InMemoryUserRepository implements UserRepository {
     if (userAlreadyRegistered) {
       throw new Error("Email already registered")
     }
-    this.users.push(user)
+    this.users.push({ password, ...user })
     return user
   }
 }
