@@ -2,11 +2,12 @@ import type { CategoryRepository } from "./interfaces/CategoryRepository"
 import type {
   AddCategoryToBankAccount,
   AddedCategoryToBankAccount,
-  Categories,
+  Category,
 } from "../Interfaces/Category"
+import type { BankAccount } from "@/Interfaces/BankAccount"
 
 export class InMemoryCategoryRepository implements CategoryRepository {
-  categories: Categories[] = []
+  categories: Category[] = []
 
   async save(
     addCategoryToBankAccount: AddCategoryToBankAccount
@@ -25,5 +26,9 @@ export class InMemoryCategoryRepository implements CategoryRepository {
     }
     this.categories.push(addedCategory)
     return addedCategory
+  }
+
+  async findByBankAccountId(id: BankAccount["id"]): Promise<Category[]> {
+    return this.categories.filter((category) => category.bankAccountId === id)
   }
 }
