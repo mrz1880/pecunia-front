@@ -31,4 +31,14 @@ export class InMemoryBankAccountRepository implements BankAccountRepository {
       (bankAccount) => bankAccount.userId === userId
     )
   }
+
+  async findById(bankAccountId: BankAccount["id"]): Promise<BankAccount> {
+    const bankAccount = this.bankAccounts.find(
+      (bankAccount) => bankAccount.id === bankAccountId
+    )
+    if (!bankAccount) {
+      throw new Error("Bank account not found")
+    }
+    return bankAccount
+  }
 }
