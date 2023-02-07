@@ -40,7 +40,7 @@ export class InMemoryUserRepository implements UserRepository {
     }
   }
 
-  async findById(userId: number): Promise<User> {
+  async findById(userId: User["id"]): Promise<User> {
     const user = this.users.find((user) => user.id === userId)
     if (!user) {
       throw new Error("User not found")

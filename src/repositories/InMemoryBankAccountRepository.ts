@@ -4,6 +4,7 @@ import type {
   AddedBankAccount,
   BankAccount,
 } from "../Interfaces/BankAccount"
+import type { User } from "@/Interfaces/User"
 
 export class InMemoryBankAccountRepository implements BankAccountRepository {
   bankAccounts: BankAccount[] = []
@@ -23,5 +24,11 @@ export class InMemoryBankAccountRepository implements BankAccountRepository {
     }
     this.bankAccounts.push(addedBankAccount)
     return addedBankAccount
+  }
+
+  async findByUserId(userId: User["id"]): Promise<BankAccount[]> {
+    return this.bankAccounts.filter(
+      (bankAccount) => bankAccount.userId === userId
+    )
   }
 }

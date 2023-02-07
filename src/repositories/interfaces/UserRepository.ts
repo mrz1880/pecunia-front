@@ -11,5 +11,5 @@ export interface UserRepository {
 
   login(loginUser: LoginUser): Promise<Tokens>
 
-  findById(userId: number): Promise<User>
+  findById(userId: User["id"]): Promise<User>
 }
