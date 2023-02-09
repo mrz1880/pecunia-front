@@ -4,17 +4,31 @@ import { InMemoryRecurrentTransactionRepository } from "../repositories/InMemory
 import { InMemoryCategoryRepository } from "../repositories/InMemoryCategoryRepository"
 
 describe("Add Recurrent Transaction to Bank Account", () => {
+  let bankAccountRepository: InMemoryBankAccountRepository
+  let recurrentTransactionRepository: InMemoryRecurrentTransactionRepository
+  let categoryRepository: InMemoryCategoryRepository
+  let addRecurrentTransactionToBankAccountUseCase: AddRecurrentTransactionToBankAccountUseCase
+
+  beforeEach(() => {
+    bankAccountRepository = new InMemoryBankAccountRepository()
+    recurrentTransactionRepository =
+      new InMemoryRecurrentTransactionRepository()
+    categoryRepository = new InMemoryCategoryRepository()
+    addRecurrentTransactionToBankAccountUseCase =
+      new AddRecurrentTransactionToBankAccountUseCase(
+        bankAccountRepository,
+        recurrentTransactionRepository,
+        categoryRepository
+      )
+  })
   it("should add a recurrent transaction to a bank account", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const recurrentTransactionRepository =
-      new InMemoryRecurrentTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
+
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       userId: 1,
@@ -22,13 +36,8 @@ describe("Add Recurrent Transaction to Bank Account", () => {
       bankAccountId: existingBankAccount.id,
     }
     categoryRepository.categories = [existingCategory]
-    const addRecurrentTransactionToBankAccountUseCase =
-      new AddRecurrentTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        recurrentTransactionRepository,
-        categoryRepository
-      )
-    const newReccurentTransaction = {
+
+    const newRecurrentTransaction = {
       name: "My Recurrent Transaction",
       amount: 100,
       frequency: "monthly",
@@ -37,27 +46,16 @@ describe("Add Recurrent Transaction to Bank Account", () => {
       bankAccountId: existingBankAccount.id,
       categoryId: existingCategory.id,
     }
-    const addedReccurentTransactionToBankAccount =
+    const addedRecurrentTransactionToBankAccount =
       await addRecurrentTransactionToBankAccountUseCase.execute(
-        newReccurentTransaction
+        newRecurrentTransaction
       )
-    expect(addedReccurentTransactionToBankAccount).toEqual({
+    expect(addedRecurrentTransactionToBankAccount).toEqual({
       id: recurrentTransactionRepository.recurrentTransactions.length,
-      ...newReccurentTransaction,
+      ...newRecurrentTransaction,
     })
   })
   it("should throw an error if the bank account does not exist", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
-
-    const recurrentTransactionRepository =
-      new InMemoryRecurrentTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
-    const addRecurrentTransactionToBankAccountUseCase =
-      new AddRecurrentTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        recurrentTransactionRepository,
-        categoryRepository
-      )
     await expect(
       addRecurrentTransactionToBankAccountUseCase.execute({
         name: "My Recurrent Transaction",
@@ -72,16 +70,13 @@ describe("Add Recurrent Transaction to Bank Account", () => {
     expect(recurrentTransactionRepository.recurrentTransactions).toHaveLength(0)
   })
   it("should throw an error if the transaction description is empty", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const recurrentTransactionRepository =
-      new InMemoryRecurrentTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
+
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       userId: 1,
@@ -89,12 +84,7 @@ describe("Add Recurrent Transaction to Bank Account", () => {
       bankAccountId: existingBankAccount.id,
     }
     categoryRepository.categories = [existingCategory]
-    const addRecurrentTransactionToBankAccountUseCase =
-      new AddRecurrentTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        recurrentTransactionRepository,
-        categoryRepository
-      )
+
     await expect(
       addRecurrentTransactionToBankAccountUseCase.execute({
         name: "",
@@ -109,14 +99,13 @@ describe("Add Recurrent Transaction to Bank Account", () => {
     expect(recurrentTransactionRepository.recurrentTransactions).toHaveLength(0)
   })
   it("should throw an error if the transaction amount is zero", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const categoryRepository = new InMemoryCategoryRepository()
+
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       userId: 1,
@@ -124,14 +113,7 @@ describe("Add Recurrent Transaction to Bank Account", () => {
       bankAccountId: existingBankAccount.id,
     }
     categoryRepository.categories = [existingCategory]
-    const recurrentTransactionRepository =
-      new InMemoryRecurrentTransactionRepository()
-    const addRecurrentTransactionToBankAccountUseCase =
-      new AddRecurrentTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        recurrentTransactionRepository,
-        categoryRepository
-      )
+
     await expect(
       addRecurrentTransactionToBankAccountUseCase.execute({
         name: "My Recurrent Transaction",
