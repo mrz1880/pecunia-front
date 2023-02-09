@@ -5,6 +5,6 @@ import type {
 
 export interface TransactionRepository {
   save(
-    param: AddTransactionToBankAccount
+    addTransactionToBankAccount: AddTransactionToBankAccount
   ): Promise<AddedTransactionToBankAccount>
 }

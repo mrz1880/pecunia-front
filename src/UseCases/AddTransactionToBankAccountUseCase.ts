@@ -18,20 +18,20 @@ export class AddTransactionToBankAccountUseCase {
   }
 
   async execute(
-    param: AddTransactionToBankAccount
+    addTransactionToBankAccount: AddTransactionToBankAccount
   ): Promise<AddedTransactionToBankAccount> {
-    if (param.amount === 0) {
+    if (addTransactionToBankAccount.amount === 0) {
       throw new Error("Transaction amount cannot be zero")
     }
-    if (!param.description) {
+    if (!addTransactionToBankAccount.description) {
       throw new Error("Transaction description is required")
     }
     const bankAccount = await this.bankAccountRepository.findById(
-      param.bankAccountId
+      addTransactionToBankAccount.bankAccountId
     )
     if (!bankAccount) {
       throw new Error("Bank account not found")
     }
-    return this.transactionRepository.save(param)
+    return this.transactionRepository.save(addTransactionToBankAccount)
   }
 }

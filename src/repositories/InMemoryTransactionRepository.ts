@@ -9,11 +9,11 @@ export class InMemoryTransactionRepository implements TransactionRepository {
   transactions: Transaction[] = []
 
   async save(
-    param: AddTransactionToBankAccount
+    addTransactionToBankAccount: AddTransactionToBankAccount
   ): Promise<AddedTransactionToBankAccount> {
     const addedTransaction = {
       id: this.transactions.length + 1,
-      ...param,
+      ...addTransactionToBankAccount,
     }
     this.transactions.push(addedTransaction)
     return addedTransaction
