@@ -6,6 +6,7 @@ export interface AddReccurentTransactionToBankAccount {
   startDate: Date
   endDate?: Date
   bankAccountId: number
+  categoryId: number
 }
 
 export interface AddedReccurentTransactionToBankAccount

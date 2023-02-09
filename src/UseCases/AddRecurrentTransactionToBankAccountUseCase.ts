@@ -4,17 +4,21 @@ import type {
   AddedReccurentTransactionToBankAccount,
   AddReccurentTransactionToBankAccount,
 } from "../Interfaces/RecurrentTransaction"
+import type { CategoryRepository } from "@/repositories/interfaces/CategoryRepository"
 
 export class AddRecurrentTransactionToBankAccountUseCase {
   private bankAccountRepository: BankAccountRepository
   private reccurentTransactionRepository: RecurrentTransactionRepository
+  private categoryRepository: CategoryRepository
 
   constructor(
     bankAccountRepository: BankAccountRepository,
-    reccurentTransactionRepository: RecurrentTransactionRepository
+    reccurentTransactionRepository: RecurrentTransactionRepository,
+    categoryRepository: CategoryRepository
   ) {
     this.bankAccountRepository = bankAccountRepository
     this.reccurentTransactionRepository = reccurentTransactionRepository
+    this.categoryRepository = categoryRepository
   }
 
   async execute(
@@ -31,6 +35,12 @@ export class AddRecurrentTransactionToBankAccountUseCase {
     )
     if (!bankAccount) {
       throw new Error("Bank account not found")
+    }
+    const category = await this.categoryRepository.findById(
+      addReccurentTransactionToBankAccount.categoryId
+    )
+    if (!category) {
+      throw new Error("Category not found")
     }
     return this.reccurentTransactionRepository.save(
       addReccurentTransactionToBankAccount
