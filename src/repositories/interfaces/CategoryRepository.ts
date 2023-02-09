@@ -11,4 +11,6 @@ export interface CategoryRepository {
   ): Promise<AddedCategoryToBankAccount>
 
   findByBankAccountId(id: BankAccount["id"]): Promise<Category[]>
+
+  findById(categoryId: Category["id"]): Promise<Category>
 }

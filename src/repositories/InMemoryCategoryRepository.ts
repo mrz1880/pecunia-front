@@ -31,4 +31,14 @@ export class InMemoryCategoryRepository implements CategoryRepository {
   async findByBankAccountId(id: BankAccount["id"]): Promise<Category[]> {
     return this.categories.filter((category) => category.bankAccountId === id)
   }
+
+  async findById(categoryId: Category["id"]): Promise<Category> {
+    const category = this.categories.find(
+      (category) => category.id === categoryId
+    )
+    if (!category) {
+      throw new Error("Category not found")
+    }
+    return category
+  }
 }

@@ -3,6 +3,7 @@ export interface AddTransactionToBankAccount {
   amount: number
   bankAccountId: number
   description: string
+  categoryId: number
 }
 
 export interface AddedTransactionToBankAccount
