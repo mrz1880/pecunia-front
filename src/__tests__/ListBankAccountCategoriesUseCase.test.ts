@@ -6,18 +6,24 @@ describe("List Bank Account Categories", () => {
   it("should list all categories of a bank account", async () => {
     const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
-      id: 1,
+      id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
     const categoryRepository = new InMemoryCategoryRepository()
-    const existingCategory = {
-      id: 1,
-      bankAccountId: existingBankAccount.id,
-      name: "My Category",
-    }
-    categoryRepository.categories = [existingCategory]
+    categoryRepository.categories = [
+      {
+        id: 1,
+        bankAccountId: existingBankAccount.id,
+        name: "My Category",
+      },
+      {
+        id: 2,
+        bankAccountId: 2,
+        name: "Not my Category because it belongs to another bank account",
+      },
+    ]
     const listBankAccountCategoriesUseCase =
       new ListBankAccountCategoriesUseCase(
         bankAccountRepository,
@@ -26,7 +32,8 @@ describe("List Bank Account Categories", () => {
     const categories = await listBankAccountCategoriesUseCase.execute({
       bankAccountId: existingBankAccount.id,
     })
-    expect(categories).toEqual([existingCategory])
+    expect(categories.length).toBe(1)
+    expect(categories[0].name).toBe("My Category")
   })
   it("should throw an error if the bank account does not exist", async () => {
     const bankAccountRepository = new InMemoryBankAccountRepository()

@@ -23,12 +23,13 @@ export class AddCategoryToBankAccountUseCase {
     if (!addCategoryToBankAccount.name) {
       throw new Error("Category name is required")
     }
-    if (!addCategoryToBankAccount.bankAccountId) {
-      throw new Error("Bank Account Id is required")
-    }
+
     const bankAccount = await this.bankAccountRepository.findById(
       addCategoryToBankAccount.bankAccountId
     )
+    if (!addCategoryToBankAccount.bankAccountId || !bankAccount) {
+      throw new Error("Bank account not found")
+    }
     return this.categoryRepository.save(addCategoryToBankAccount)
   }
 }

@@ -7,14 +7,14 @@ describe("Add Transaction to Bank Account", () => {
   it("should add a transaction to a bank account", async () => {
     const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
-      id: 1,
+      id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
     const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
-      id: 1,
+      id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: existingBankAccount.id,
     }
@@ -37,7 +37,7 @@ describe("Add Transaction to Bank Account", () => {
       newTransaction
     )
     expect(transaction).toEqual({
-      id: 1,
+      id: transactionRepository.transactions.length,
       ...newTransaction,
     })
   })
@@ -46,7 +46,7 @@ describe("Add Transaction to Bank Account", () => {
     const transactionRepository = new InMemoryTransactionRepository()
     const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
-      id: 1,
+      id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: 1,
     }
@@ -70,7 +70,7 @@ describe("Add Transaction to Bank Account", () => {
   it("should throw an error if the transaction description is empty", async () => {
     const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
-      id: 1,
+      id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
@@ -78,7 +78,7 @@ describe("Add Transaction to Bank Account", () => {
     const transactionRepository = new InMemoryTransactionRepository()
     const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
-      id: 1,
+      id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: existingBankAccount.id,
     }
@@ -102,7 +102,7 @@ describe("Add Transaction to Bank Account", () => {
   it("should throw an error if the transaction amount is zero", async () => {
     const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
-      id: 1,
+      id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
@@ -110,7 +110,7 @@ describe("Add Transaction to Bank Account", () => {
     const transactionRepository = new InMemoryTransactionRepository()
     const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
-      id: 1,
+      id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: existingBankAccount.id,
     }
@@ -134,7 +134,7 @@ describe("Add Transaction to Bank Account", () => {
   it("should throw an error if the transaction category does not exist", async () => {
     const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
-      id: 1,
+      id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
@@ -161,7 +161,7 @@ describe("Add Transaction to Bank Account", () => {
   it("should throw an error if the transaction category does not belong to the bank account", async () => {
     const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
-      id: 1,
+      id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
@@ -169,7 +169,7 @@ describe("Add Transaction to Bank Account", () => {
     const transactionRepository = new InMemoryTransactionRepository()
     const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
-      id: 1,
+      id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: 2,
     }
