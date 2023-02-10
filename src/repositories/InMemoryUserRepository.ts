@@ -48,3 +48,5 @@ export class InMemoryUserRepository implements UserRepository {
     return user
   }
 }
+
+export const userRepository = new InMemoryUserRepository()
