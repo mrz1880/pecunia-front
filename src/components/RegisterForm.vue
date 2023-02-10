@@ -1,39 +1,90 @@
 <template>
   <div>
     <h1>Register</h1>
-    <form @submit.prevent="register">
+    <form role="form" @submit.prevent="register">
       <div>
         <label for="email">Email</label>
-        <input id="email" v-model="email" type="email" @blur="validateEmail" />
-        <span v-if="emailError" class="error-message">{{ emailError }}</span>
+        <input
+          id="email"
+          v-model="email"
+          :aria-invalid="emailError ? 'true' : 'false'"
+          aria-describedby="email-error email-success"
+          required
+          type="email"
+          @blur="validateEmail"
+        />
+        <span
+          v-if="emailError"
+          id="email-error"
+          class="error-message"
+          role="alert"
+          >{{ emailError }}</span
+        >
+        <span
+          v-if="!emailError"
+          id="email-success"
+          class="success-message"
+          role="alert"
+          >Email is valid</span
+        >
       </div>
       <div>
         <label for="password">Password</label>
         <input
           id="password"
           v-model="password"
+          :aria-invalid="passwordError ? 'true' : 'false'"
+          aria-describedby="password-error password-success"
+          required
           type="password"
           @blur="validatePassword"
         />
-        <span v-if="passwordError" class="error-message">{{
-          passwordError
-        }}</span>
+        <span
+          v-if="passwordError"
+          id="password-error"
+          class="error-message"
+          role="alert"
+          >{{ passwordError }}</span
+        >
+        <span
+          v-if="!passwordError"
+          id="password-success"
+          class="success-message"
+          role="alert"
+          >Password is valid</span
+        >
       </div>
       <div>
         <label for="passwordConfirmation">Password Confirmation</label>
         <input
           id="passwordConfirmation"
           v-model="passwordConfirmation"
+          :aria-invalid="passwordConfirmationError ? 'true' : 'false'"
+          aria-describedby="passwordConfirmation-error passwordConfirmation-success"
+          required
           type="password"
           @blur="validatePasswordConfirmation"
         />
-        <span v-if="passwordConfirmationError" class="error-message">{{
-          passwordConfirmationError
-        }}</span>
+        <span
+          v-if="passwordConfirmationError"
+          id="passwordConfirmation-error"
+          class="error-message"
+          role="alert"
+          >{{ passwordConfirmationError }}</span
+        >
+        <span
+          v-if="!passwordConfirmationError"
+          id="passwordConfirmation-success"
+          class="success-message"
+          role="alert"
+          >Passwords do match</span
+        >
       </div>
-      <button type="submit">Register</button>
-      <span v-if="submitError" class="error-message">{{ submitError }}</span>
-      <span v-if="submitSuccess" class="success-message">{{
+      <button aria-label="Register" type="submit">Register</button>
+      <span v-if="submitError" class="error-message" role="alert">{{
+        submitError
+      }}</span>
+      <span v-if="submitSuccess" class="success-message" role="status">{{
         submitSuccess
       }}</span>
     </form>
@@ -79,6 +130,7 @@ function validatePassword() {
 }
 
 function validatePasswordConfirmation() {
+  passwordConfirmationError.value = ""
   if (passwordError.value) {
     return
   }
@@ -126,12 +178,12 @@ async function register() {
 
 <style>
 .error-message {
-  color: red;
+  color: #d50000;
   font-size: 12px;
 }
 
 .success-message {
-  color: #9ccc65;
+  color: #4caf50;
   font-size: 12px;
 }
 </style>
