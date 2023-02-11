@@ -21,11 +21,11 @@
           >{{ emailError }}</span
         >
         <span
-          v-if="!emailError"
+          v-if="emailSuccess"
           id="email-success"
           class="success-message"
           role="alert"
-          >Email is valid</span
+          >{{ emailSuccess }}</span
         >
       </div>
       <div>
@@ -47,11 +47,11 @@
           >{{ passwordError }}</span
         >
         <span
-          v-if="!passwordError"
+          v-if="passwordSuccess"
           id="password-success"
           class="success-message"
           role="alert"
-          >Password is valid</span
+          >{{ passwordSuccess }}</span
         >
       </div>
       <div>
@@ -63,7 +63,7 @@
           aria-describedby="passwordConfirmation-error passwordConfirmation-success"
           required
           type="password"
-          @blur="validatePasswordConfirmation"
+          @input="validatePasswordConfirmation"
         />
         <span
           v-if="passwordConfirmationError"
@@ -73,14 +73,16 @@
           >{{ passwordConfirmationError }}</span
         >
         <span
-          v-if="!passwordConfirmationError"
+          v-if="passwordConfirmationSuccess"
           id="passwordConfirmation-success"
           class="success-message"
           role="alert"
-          >Passwords do match</span
+          >{{ passwordConfirmationSuccess }}</span
         >
       </div>
-      <button aria-label="Register" type="submit">Register</button>
+      <button :disabled="disabled" aria-label="Register" type="submit">
+        Register
+      </button>
       <span v-if="submitError" class="error-message" role="alert">{{
         submitError
       }}</span>
@@ -92,7 +94,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import { RegisterUserUseCase } from "@/UseCases/RegisterUserUseCase"
 import { userRepository } from "@/repositories/InMemoryUserRepository"
 
@@ -101,8 +103,20 @@ const password = ref("")
 const passwordConfirmation = ref("")
 
 const emailError = ref("")
+const emailSuccess = ref("")
 const passwordError = ref("")
+const passwordSuccess = ref("")
 const passwordConfirmationError = ref("")
+const passwordConfirmationSuccess = ref("")
+
+const disabled = computed(
+  () =>
+    !(
+      !!emailSuccess.value &&
+      !!passwordSuccess.value &&
+      !!passwordConfirmationSuccess.value
+    )
+)
 
 const submitError = ref("")
 const submitSuccess = ref("")
@@ -112,6 +126,7 @@ function validateEmail() {
   if (email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
     console.info("valid email")
     emailError.value = ""
+    emailSuccess.value = "Email is valid"
   } else {
     console.warn("invalid email")
     emailError.value = "Please enter a valid email"
@@ -126,6 +141,7 @@ function validatePassword() {
   } else {
     console.info("valid password")
     passwordError.value = ""
+    passwordSuccess.value = "Password is valid"
   }
 }
 
@@ -141,6 +157,7 @@ function validatePasswordConfirmation() {
   } else {
     console.info("passwords match")
     passwordConfirmationError.value = ""
+    passwordConfirmationSuccess.value = "Passwords match"
   }
 }
 
