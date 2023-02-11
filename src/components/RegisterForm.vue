@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Register</h1>
-    <form role="form" @submit.prevent="register">
+    <form role="form" @submit.prevent="submitRegisterForm">
       <div>
         <label for="email">Email</label>
         <input
@@ -148,7 +148,7 @@ function validatePasswordConfirmation() {
     : ""
 }
 
-async function register() {
+async function submitRegisterForm() {
   submitError.value = ""
   submitSuccess.value = ""
   validateEmail()
