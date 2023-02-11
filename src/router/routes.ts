@@ -1,4 +1,5 @@
 import RegisterForm from "@/components/RegisterForm.vue"
+import LoginForm from "@/components/LoginForm.vue"
 
 export const routes = [
   {
@@ -7,4 +8,5 @@ export const routes = [
     component: RegisterForm,
   },
   { path: "/register", component: RegisterForm },
+  { path: "/login", component: LoginForm },
 ]
