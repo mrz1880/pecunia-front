@@ -80,7 +80,7 @@
           >{{ passwordConfirmationSuccess }}</span
         >
       </div>
-      <button :disabled="disabled" aria-label="Register" type="submit">
+      <button :disabled="!isFormValid" aria-label="Register" type="submit">
         Register
       </button>
       <span v-if="submitError" class="error-message" role="alert">{{
@@ -109,13 +109,11 @@ const passwordSuccess = ref("")
 const passwordConfirmationError = ref("")
 const passwordConfirmationSuccess = ref("")
 
-const disabled = computed(
+const isFormValid = computed(
   () =>
-    !(
-      !!emailSuccess.value &&
-      !!passwordSuccess.value &&
-      !!passwordConfirmationSuccess.value
-    )
+    !!emailSuccess.value &&
+    !!passwordSuccess.value &&
+    !!passwordConfirmationSuccess.value
 )
 
 const submitError = ref("")
@@ -167,9 +165,7 @@ async function register() {
   validateEmail()
   validatePassword()
   validatePasswordConfirmation()
-  const isFormInvalid =
-    emailError.value || passwordError.value || passwordConfirmationError.value
-  if (isFormInvalid) {
+  if (!isFormValid.value) {
     console.error("form is invalid")
     return
   }
