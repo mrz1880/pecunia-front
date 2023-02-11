@@ -120,43 +120,32 @@ const submitError = ref("")
 const submitSuccess = ref("")
 
 function validateEmail() {
-  emailError.value = ""
-  if (email.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    console.info("valid email")
-    emailError.value = ""
-    emailSuccess.value = "Email is valid"
-  } else {
-    console.warn("invalid email")
-    emailError.value = "Please enter a valid email"
-  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const isValidEmail = emailRegex.test(email.value)
+
+  emailError.value = isValidEmail ? "" : "Please enter a valid email"
+  emailSuccess.value = isValidEmail ? "Email is valid" : ""
 }
 
 function validatePassword() {
-  passwordError.value = ""
-  if (password.value.length < 6) {
-    console.warn("invalid password")
-    passwordError.value = "Password must be at least 6 characters"
-  } else {
-    console.info("valid password")
-    passwordError.value = ""
-    passwordSuccess.value = "Password is valid"
-  }
+  const isValidPassword = password.value.length >= 6
+
+  passwordError.value = isValidPassword
+    ? ""
+    : "Password must be at least 6 characters long"
+  passwordSuccess.value = isValidPassword ? "Password is valid" : ""
 }
 
 function validatePasswordConfirmation() {
-  passwordConfirmationError.value = ""
-  if (passwordError.value) {
-    return
-  }
-  passwordConfirmationError.value = ""
-  if (passwordConfirmation.value !== password.value) {
-    console.warn("passwords do not match")
-    passwordConfirmationError.value = "Passwords do not match"
-  } else {
-    console.info("passwords match")
-    passwordConfirmationError.value = ""
-    passwordConfirmationSuccess.value = "Passwords match"
-  }
+  const isValidPasswordConfirmation =
+    passwordConfirmation.value === password.value
+
+  passwordConfirmationError.value = isValidPasswordConfirmation
+    ? ""
+    : "Passwords do not match"
+  passwordConfirmationSuccess.value = isValidPasswordConfirmation
+    ? "Passwords match"
+    : ""
 }
 
 async function register() {
