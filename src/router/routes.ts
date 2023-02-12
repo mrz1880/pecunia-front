@@ -1,5 +1,5 @@
-import RegisterForm from "@/components/RegisterForm.vue"
-import LoginForm from "@/components/LoginForm.vue"
+import RegisterForm from "@/views/RegisterForm.vue"
+import LoginForm from "@/views/LoginForm.vue"
 
 export const routes = [
   {
