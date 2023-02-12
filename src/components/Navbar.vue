@@ -8,12 +8,15 @@
         <router-link to="/login">Login</router-link>
       </li>
       <li v-if="!isAuthenticated">
-        <router-link to="/register">Register </router-link>
+        <router-link to="/register">Register</router-link>
+      </li>
+      <li v-if="isAuthenticated">
+        <a href="#" @click="logout">Logout</a>
       </li>
     </ul>
   </nav>
 </template>
 
 <script lang="ts" setup>
-import { isAuthenticated } from "@/composables/storeUser"
+import { isAuthenticated, logout } from "@/composables/storeUser"
 </script>
