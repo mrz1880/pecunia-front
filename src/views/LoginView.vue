@@ -73,6 +73,7 @@ import { userRepository } from "@/repositories/InMemoryUserRepository"
 import { LoginUserUseCase } from "@/UseCases/LoginUserUseCase"
 import { tokens } from "@/composables/storeUser"
 import router from "@/router"
+import { routes } from "@/router/routes"
 
 const email = ref("")
 const password = ref("")
@@ -136,7 +137,7 @@ async function submitLoginForm() {
     email.value = ""
     password.value = ""
     console.info("logged in", tokens.value)
-    await router.push({ name: "Home" })
+    await router.push({ name: routes.home.name })
   } catch (error) {
     console.error(`${(error as Error).message}: ${email.value}`)
     submitError.value = (error as Error).message
