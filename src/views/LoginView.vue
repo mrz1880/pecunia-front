@@ -71,6 +71,8 @@
 import { computed, ref } from "vue"
 import { userRepository } from "@/repositories/InMemoryUserRepository"
 import { LoginUserUseCase } from "@/UseCases/LoginUserUseCase"
+import { tokens } from "@/composables/storeUser"
+import router from "@/router"
 
 const email = ref("")
 const password = ref("")
@@ -126,14 +128,15 @@ async function submitLoginForm() {
   const loginUserUseCase = new LoginUserUseCase(userRepository)
   try {
     console.info("logging in user...")
-    const tokens = await loginUserUseCase.execute({
+    tokens.value = await loginUserUseCase.execute({
       email: email.value,
       password: password.value,
     })
     submitSuccess.value = "User logged in"
     email.value = ""
     password.value = ""
-    console.info("logged in", tokens)
+    console.info("logged in", tokens.value)
+    await router.push({ name: "Home" })
   } catch (error) {
     console.error(`${(error as Error).message}: ${email.value}`)
     submitError.value = (error as Error).message
