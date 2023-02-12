@@ -2,12 +2,20 @@ import RegisterView from "@/views/RegisterView.vue"
 import HomeView from "@/views/HomeView.vue"
 import LoginView from "@/views/LoginView.vue"
 
-export const routes = [
-  {
+export const routes = {
+  home: {
     path: "/",
     name: "home",
     component: HomeView,
   },
-  { path: "/register", component: RegisterView },
-  { path: "/login", component: LoginView },
-]
+  register: {
+    path: "/register",
+    name: "register",
+    component: RegisterView,
+  },
+  login: {
+    path: "/login",
+    name: "login",
+    component: LoginView,
+  },
+}
