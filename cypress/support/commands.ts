@@ -35,3 +35,20 @@
 //     }
 //   }
 // }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      signIn(): void
+    }
+  }
+}
+
+Cypress.Commands.add("signIn", () => {
+  cy.visit("/login")
+  cy.get("#email").clear()
+  cy.get("#email").type("cypress@pecunia.com")
+  cy.get("#password").clear()
+  cy.get("#password").type("cypress")
+  cy.get("button").click()
+})
