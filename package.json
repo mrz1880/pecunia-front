@@ -8,6 +8,8 @@
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/ --run",
     "test:unit:watch": "vitest --environment jsdom --root src/ --watch",
+    "test:e2e:open": "cypress open",
+    "test:e2e:run": "cypress run",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "type-check:watch": "npm run type-check -- --watch",
