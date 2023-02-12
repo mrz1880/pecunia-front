@@ -4,11 +4,15 @@ import type {
   LoginUser,
   Tokens,
   User,
-} from "../Interfaces/User"
+} from "@/Interfaces/User"
 import type { UserRepository } from "./interfaces/UserRepository"
 
 export class InMemoryUserRepository implements UserRepository {
   users: User[] = []
+
+  constructor(users: User[] = []) {
+    this.users = users
+  }
 
   async save(createUser: CreateUser): Promise<CreatedUser> {
     const { password, ...user } = {
@@ -49,4 +53,12 @@ export class InMemoryUserRepository implements UserRepository {
   }
 }
 
-export const userRepository = new InMemoryUserRepository()
+const usersByEnv: Record<string, User[]> = {
+  test: [],
+  development: [{ id: 1, email: "cypress@pecunia.com", password: "cypress" }],
+  production: [],
+}
+
+const env = process.env.NODE_ENV ?? "development"
+
+export const userRepository = new InMemoryUserRepository(usersByEnv[env])
