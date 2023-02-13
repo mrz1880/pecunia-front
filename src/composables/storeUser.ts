@@ -5,6 +5,6 @@ export const tokens = ref<Tokens>()
 
 export const isAuthenticated = computed(() => !!tokens.value)
 
-export const logout = () => {
+export function logout(): void {
   tokens.value = undefined
 }
