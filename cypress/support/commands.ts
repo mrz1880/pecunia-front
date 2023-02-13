@@ -36,14 +36,6 @@
 //   }
 // }
 
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      signIn(): void
-    }
-  }
-}
-
 Cypress.Commands.add("signIn", () => {
   cy.visit("/login")
   cy.get("#email").clear()
