@@ -72,8 +72,7 @@ import { computed, ref } from "vue"
 import { userRepository } from "@/repositories/InMemoryUserRepository"
 import { LoginUserUseCase } from "@/UseCases/LoginUserUseCase"
 import { tokens } from "@/composables/storeUser"
-import router from "@/router"
-import { routes } from "@/router/routes"
+import router, { routes } from "@/router"
 
 const email = ref("")
 const password = ref("")
