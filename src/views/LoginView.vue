@@ -69,7 +69,10 @@
 
 <script lang="ts" setup>
 import { computed, ref } from "vue"
-import { userRepository } from "@/repositories/InMemoryUserRepository"
+import {
+  defaultTokenHelper,
+  userRepository,
+} from "@/repositories/InMemoryUserRepository"
 import { LoginUserUseCase } from "@/UseCases/LoginUserUseCase"
 import { tokens } from "@/composables/storeUser"
 import router, { routes } from "@/router"
@@ -132,11 +135,12 @@ async function submitLoginForm() {
       email: email.value,
       password: password.value,
     })
+    defaultTokenHelper.storeTokensInLocalStorage(tokens.value)
     submitSuccess.value = "User logged in"
     email.value = ""
     password.value = ""
     console.info("logged in", tokens.value)
-    await router.push({ name: routes.home.name })
+    await router.push(routes.home.path)
   } catch (error) {
     console.error(`${(error as Error).message}: ${email.value}`)
     submitError.value = (error as Error).message
