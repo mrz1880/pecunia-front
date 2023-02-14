@@ -7,11 +7,42 @@ import type {
 } from "@/Interfaces/User"
 import type { UserRepository } from "./interfaces/UserRepository"
 
+interface TokenHelper {
+  generateTokens(user: User): Tokens
+
+  decodeToken(accessToken: string): User
+
+  storeTokensInLocalStorage(value: Tokens | undefined): void
+}
+
+class InMemoryTokenHelper implements TokenHelper {
+  generateTokens(user: User): Tokens {
+    return {
+      accessToken: "accessToken+" + JSON.stringify(user),
+      refreshToken: "refreshToken+" + JSON.stringify(user),
+    }
+  }
+
+  decodeToken(accessToken: string): User {
+    const [, payload] = accessToken.split("+")
+    return JSON.parse(payload)
+  }
+
+  storeTokensInLocalStorage(value: Tokens | undefined) {
+    localStorage.setItem("tokens", JSON.stringify(value))
+  }
+}
+
 export class InMemoryUserRepository implements UserRepository {
   users: User[] = []
+  private tokenHelper: TokenHelper
 
-  constructor(users: User[] = []) {
+  constructor(
+    users: User[] = [],
+    tokenHelper: TokenHelper = defaultTokenHelper
+  ) {
     this.users = users
+    this.tokenHelper = tokenHelper
   }
 
   async save(createUser: CreateUser): Promise<CreatedUser> {
@@ -38,10 +69,7 @@ export class InMemoryUserRepository implements UserRepository {
       throw new Error("Invalid credentials")
     }
 
-    return {
-      accessToken: "accessToken" + user.email,
-      refreshToken: "refreshToken" + user.email,
-    }
+    return this.tokenHelper.generateTokens(user)
   }
 
   async findById(userId: User["id"]): Promise<User> {
@@ -61,4 +89,5 @@ const usersByEnv: Record<string, User[]> = {
 
 const env = process.env.NODE_ENV ?? "development"
 
+export const defaultTokenHelper = new InMemoryTokenHelper()
 export const userRepository = new InMemoryUserRepository(usersByEnv[env])
