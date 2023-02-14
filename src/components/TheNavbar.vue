@@ -8,7 +8,11 @@
         v-if="isAuthenticated"
         :aria-current="isCurrentRoute(routes.bankAccount.path)"
       >
-        <router-link :to="routes.bankAccount.path">Bank Accounts</router-link>
+        <router-link
+          :to="routes.bankAccount.path"
+          data-test="navbar-bankAccount-link"
+          >Bank Accounts</router-link
+        >
       </li>
 
       <li

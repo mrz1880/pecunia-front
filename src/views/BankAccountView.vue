@@ -9,6 +9,7 @@
           v-model="name"
           :aria-invalid="nameError ? 'true' : 'false'"
           aria-describedby="name-error name-success"
+          data-test="bankAccount-name-input"
           required
           type="text"
           @input="validateName"
@@ -31,6 +32,7 @@
       <button
         :disabled="!isFormValid"
         aria-label="Add bank account"
+        data-test="bankAccount-submit-button"
         type="submit"
       >
         Add Bank Account
@@ -43,7 +45,7 @@
       }}</span>
     </form>
     <h1>Bank Accounts</h1>
-    <ul>
+    <ul data-test="bankAccount-list-ul">
       <li v-for="bankAccount in bankAccountsList" :key="bankAccount.id">
         {{ bankAccount.name }}
       </li>
