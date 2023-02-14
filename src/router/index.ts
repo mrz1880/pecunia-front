@@ -20,9 +20,9 @@ export const routes = {
     name: "login",
     component: LoginView,
   },
-  addBankAccount: {
-    path: "/add-bank-account",
-    name: "add-bank-account",
+  bankAccount: {
+    path: "/bank-account",
+    name: "bank-account",
     component: BankAccountView,
   },
 }
@@ -46,9 +46,9 @@ const router = createRouter({
       component: routes.login.component,
     },
     {
-      path: routes.addBankAccount.path,
-      name: routes.addBankAccount.name,
-      component: routes.addBankAccount.component,
+      path: routes.bankAccount.path,
+      name: routes.bankAccount.name,
+      component: routes.bankAccount.component,
     },
   ],
 })
