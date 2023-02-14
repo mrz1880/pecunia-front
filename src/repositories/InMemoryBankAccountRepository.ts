@@ -42,3 +42,5 @@ export class InMemoryBankAccountRepository implements BankAccountRepository {
     return bankAccount
   }
 }
+
+export const bankAccountRepository = new InMemoryBankAccountRepository()
