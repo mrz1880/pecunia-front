@@ -37,11 +37,9 @@
 <script lang="ts" setup>
 import { isAuthenticated, logout } from "@/composables/storeUser"
 import { useRoute } from "vue-router"
-import { ref } from "vue"
 import { routes } from "@/router"
 
 const currentRoute = useRoute().path
-const showDropDown = ref(false)
 
 function isCurrentRoute(route: string): "page" | boolean {
   return currentRoute === route ? "page" : false
