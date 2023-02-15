@@ -1,6 +1,6 @@
 describe("Logout User Use Case", () => {
   it("logout user", () => {
     cy.signIn()
-    cy.contains("Logout").click()
+    cy.get("[data-test='navbar-logout-link']").click()
   })
 })

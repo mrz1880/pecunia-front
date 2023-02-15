@@ -11,8 +11,8 @@
         <router-link
           :to="routes.bankAccount.path"
           data-test="navbar-bankAccount-link"
-          >Bank Accounts</router-link
-        >
+          >Bank Accounts
+        </router-link>
       </li>
 
       <li
@@ -28,7 +28,7 @@
         <router-link :to="routes.register.path">Register</router-link>
       </li>
       <li v-if="isAuthenticated">
-        <a href="#" @click="logout">Logout</a>
+        <a data-test="navbar-logout-link" href="#" @click="logout">Logout</a>
       </li>
     </ul>
   </nav>
