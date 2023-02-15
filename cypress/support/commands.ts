@@ -38,9 +38,7 @@
 
 Cypress.Commands.add("signIn", () => {
   cy.visit("/login")
-  cy.get("#email").clear()
-  cy.get("#email").type("cypress@pecunia.com")
-  cy.get("#password").clear()
-  cy.get("#password").type("cypress")
-  cy.get("button").click()
+  cy.get("[data-test=login-email-input]").clear().type("cypress@pecunia.com")
+  cy.get("[data-test=login-password-input]").clear().type("cypress")
+  cy.get("[data-test=login-submit-button]").click()
 })
