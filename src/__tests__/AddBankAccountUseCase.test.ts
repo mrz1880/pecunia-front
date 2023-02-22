@@ -3,34 +3,38 @@ import { InMemoryBankAccountRepository } from "../repositories/InMemoryBankAccou
 import { AddBankAccountUseCase } from "../UseCases/AddBankAccountUseCase"
 
 describe("Add Bank Account", () => {
+  let userRepository: InMemoryUserRepository
+  let bankAccountRepository: InMemoryBankAccountRepository
+  let bankAccountUseCase: AddBankAccountUseCase
+
+  beforeEach(() => {
+    userRepository = new InMemoryUserRepository()
+    bankAccountRepository = new InMemoryBankAccountRepository()
+    bankAccountUseCase = new AddBankAccountUseCase(
+      userRepository,
+      bankAccountRepository
+    )
+  })
+
   it("should add a bank account", async () => {
-    const userRepository = new InMemoryUserRepository()
     const existingUser = {
       id: userRepository.users.length + 1,
       email: "john@doe.com",
       password: "123456",
     }
     userRepository.users = [existingUser]
-    const bankAccountRepository = new InMemoryBankAccountRepository()
-    const bankAccountUseCase = new AddBankAccountUseCase(
-      userRepository,
-      bankAccountRepository
-    )
+
     const bankAccount = await bankAccountUseCase.execute({
       name: "My Bank Account",
       userId: existingUser.id,
     })
+
     expect(bankAccount).toHaveProperty("id")
     expect(bankAccount.name).toBe("My Bank Account")
     expect(bankAccount.userId).toBe(existingUser.id)
   })
+
   it("should throw an error if the user does not exist", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const bankAccountRepository = new InMemoryBankAccountRepository()
-    const bankAccountUseCase = new AddBankAccountUseCase(
-      userRepository,
-      bankAccountRepository
-    )
     await expect(
       bankAccountUseCase.execute({
         name: "My Bank Account",
@@ -38,26 +42,23 @@ describe("Add Bank Account", () => {
       })
     ).rejects.toThrowError("User not found")
   })
+
   it("should throw an error if the bank account already exists", async () => {
-    const userRepository = new InMemoryUserRepository()
     const existingUser = {
       id: userRepository.users.length + 1,
       email: "john@doe.com",
       password: "123456",
     }
     userRepository.users = [existingUser]
-    const bankAccountRepository = new InMemoryBankAccountRepository()
+
     bankAccountRepository.bankAccounts = [
       {
-        id: bankAccountRepository.bankAccounts.length + 1,
+        id: 1,
         name: "My Bank Account",
         userId: existingUser.id,
       },
     ]
-    const bankAccountUseCase = new AddBankAccountUseCase(
-      userRepository,
-      bankAccountRepository
-    )
+
     await expect(
       bankAccountUseCase.execute({
         name: "My Bank Account",
@@ -65,15 +66,15 @@ describe("Add Bank Account", () => {
       })
     ).rejects.toThrowError("Bank account already exists")
   })
+
   it("should throw an error if the bank account name is empty", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const existingUser = { id: 1, email: "john@doe.com", password: "123456" }
+    const existingUser = {
+      id: 1,
+      email: "john@doe.com",
+      password: "123456",
+    }
     userRepository.users = [existingUser]
-    const bankAccountRepository = new InMemoryBankAccountRepository()
-    const bankAccountUseCase = new AddBankAccountUseCase(
-      userRepository,
-      bankAccountRepository
-    )
+
     await expect(
       bankAccountUseCase.execute({
         name: "",

@@ -4,28 +4,35 @@ import { AddTransactionToBankAccountUseCase } from "../UseCases/AddTransactionTo
 import { InMemoryCategoryRepository } from "../repositories/InMemoryCategoryRepository"
 
 describe("Add Transaction to Bank Account", () => {
+  let bankAccountRepository: InMemoryBankAccountRepository
+  let transactionRepository: InMemoryTransactionRepository
+  let categoryRepository: InMemoryCategoryRepository
+  let addTransactionToBankAccountUseCase: AddTransactionToBankAccountUseCase
+
+  beforeEach(() => {
+    bankAccountRepository = new InMemoryBankAccountRepository()
+    transactionRepository = new InMemoryTransactionRepository()
+    categoryRepository = new InMemoryCategoryRepository()
+    addTransactionToBankAccountUseCase = new AddTransactionToBankAccountUseCase(
+      bankAccountRepository,
+      transactionRepository,
+      categoryRepository
+    )
+  })
   it("should add a transaction to a bank account", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: existingBankAccount.id,
     }
     categoryRepository.categories = [existingCategory]
-    const transactionRepository = new InMemoryTransactionRepository()
-    const addTransactionToBankAccountUseCase =
-      new AddTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        transactionRepository,
-        categoryRepository
-      )
+
     const newTransaction = {
       bankAccountId: existingBankAccount.id,
       amount: 100,
@@ -42,20 +49,12 @@ describe("Add Transaction to Bank Account", () => {
     })
   })
   it("should throw an error if the bank account does not exist", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
-    const transactionRepository = new InMemoryTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: 1,
     }
-    const addTransactionToBankAccountUseCase =
-      new AddTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        transactionRepository,
-        categoryRepository
-      )
+
     await expect(
       addTransactionToBankAccountUseCase.execute({
         bankAccountId: 1,
@@ -68,26 +67,18 @@ describe("Add Transaction to Bank Account", () => {
     expect(transactionRepository.transactions).toHaveLength(0)
   })
   it("should throw an error if the transaction description is empty", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const transactionRepository = new InMemoryTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: existingBankAccount.id,
     }
-    const addTransactionToBankAccountUseCase =
-      new AddTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        transactionRepository,
-        categoryRepository
-      )
+
     await expect(
       addTransactionToBankAccountUseCase.execute({
         bankAccountId: existingBankAccount.id,
@@ -100,26 +91,18 @@ describe("Add Transaction to Bank Account", () => {
     expect(transactionRepository.transactions).toHaveLength(0)
   })
   it("should throw an error if the transaction amount is zero", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const transactionRepository = new InMemoryTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: existingBankAccount.id,
     }
-    const addTransactionToBankAccountUseCase =
-      new AddTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        transactionRepository,
-        categoryRepository
-      )
+
     await expect(
       addTransactionToBankAccountUseCase.execute({
         bankAccountId: existingBankAccount.id,
@@ -132,21 +115,13 @@ describe("Add Transaction to Bank Account", () => {
     expect(transactionRepository.transactions).toHaveLength(0)
   })
   it("should throw an error if the transaction category does not exist", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const transactionRepository = new InMemoryTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
-    const addTransactionToBankAccountUseCase =
-      new AddTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        transactionRepository,
-        categoryRepository
-      )
+
     await expect(
       addTransactionToBankAccountUseCase.execute({
         bankAccountId: existingBankAccount.id,
@@ -159,27 +134,19 @@ describe("Add Transaction to Bank Account", () => {
     expect(transactionRepository.transactions).toHaveLength(0)
   })
   it("should throw an error if the transaction category does not belong to the bank account", async () => {
-    const bankAccountRepository = new InMemoryBankAccountRepository()
     const existingBankAccount = {
       id: bankAccountRepository.bankAccounts.length + 1,
       userId: 1,
       name: "My Bank Account",
     }
     bankAccountRepository.bankAccounts = [existingBankAccount]
-    const transactionRepository = new InMemoryTransactionRepository()
-    const categoryRepository = new InMemoryCategoryRepository()
     const existingCategory = {
       id: categoryRepository.categories.length + 1,
       name: "My Category",
       bankAccountId: 2,
     }
     categoryRepository.categories = [existingCategory]
-    const addTransactionToBankAccountUseCase =
-      new AddTransactionToBankAccountUseCase(
-        bankAccountRepository,
-        transactionRepository,
-        categoryRepository
-      )
+
     await expect(
       addTransactionToBankAccountUseCase.execute({
         bankAccountId: existingBankAccount.id,

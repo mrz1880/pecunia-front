@@ -3,9 +3,14 @@ import { RegisterUserUseCase } from "../UseCases/RegisterUserUseCase"
 import { expect } from "vitest"
 
 describe("Register User Use Case", () => {
+  let userRepository: InMemoryUserRepository
+  let registerUserUseCase: RegisterUserUseCase
+
+  beforeEach(() => {
+    userRepository = new InMemoryUserRepository()
+    registerUserUseCase = new RegisterUserUseCase(userRepository)
+  })
   it("should register a user", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const registerUserUseCase = new RegisterUserUseCase(userRepository)
     const validUser = {
       email: "john@doe.com",
       password: "123456",
@@ -17,8 +22,6 @@ describe("Register User Use Case", () => {
     expect(userRepository.users).toHaveLength(1)
   })
   it("should not register a user with an invalid email", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const registerUserUseCase = new RegisterUserUseCase(userRepository)
     const userWithInvalidEmail = {
       email: "invalid-email",
       password: "valid-password",
@@ -32,8 +35,6 @@ describe("Register User Use Case", () => {
     expect(userRepository.users).toHaveLength(0)
   })
   it("should not register a user with an invalid password", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const registerUserUseCase = new RegisterUserUseCase(userRepository)
     const userWithInvalidPassword = {
       email: "john@doe.com",
       password: "123",
@@ -47,8 +48,6 @@ describe("Register User Use Case", () => {
     expect(userRepository.users).toHaveLength(0)
   })
   it("should not register a user with an already registered email", async () => {
-    const userRepository = new InMemoryUserRepository()
-    const registerUserUseCase = new RegisterUserUseCase(userRepository)
     const validUser = {
       email: "john@doe.com",
       password: "123456",
