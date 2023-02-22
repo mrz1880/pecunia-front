@@ -42,3 +42,5 @@ export class InMemoryCategoryRepository implements CategoryRepository {
     return category
   }
 }
+
+export const categoryRepository = new InMemoryCategoryRepository()
