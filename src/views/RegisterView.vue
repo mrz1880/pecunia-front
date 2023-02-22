@@ -9,6 +9,7 @@
           v-model="email"
           :aria-invalid="emailError ? 'true' : 'false'"
           aria-describedby="email-error email-success"
+          data-test="register-email-input"
           required
           type="email"
           @blur="validateEmail"
@@ -35,6 +36,7 @@
           v-model="password"
           :aria-invalid="passwordError ? 'true' : 'false'"
           aria-describedby="password-error password-success"
+          data-test="register-password-input"
           required
           type="password"
           @blur="validatePassword"
@@ -61,6 +63,7 @@
           v-model="passwordConfirmation"
           :aria-invalid="passwordConfirmationError ? 'true' : 'false'"
           aria-describedby="passwordConfirmation-error passwordConfirmation-success"
+          data-test="register-passwordConfirmation-input"
           required
           type="password"
           @input="validatePasswordConfirmation"
@@ -80,7 +83,12 @@
           >{{ passwordConfirmationSuccess }}</span
         >
       </div>
-      <button :disabled="!isFormValid" aria-label="Register" type="submit">
+      <button
+        :disabled="!isFormValid"
+        aria-label="Register"
+        data-test="register-submit-button"
+        type="submit"
+      >
         Register
       </button>
       <span v-if="submitError" class="error-message" role="alert">{{
