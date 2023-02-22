@@ -1,7 +1,7 @@
-import type { BankAccountRepository } from "../repositories/interfaces/BankAccountRepository"
-import type { CategoryRepository } from "../repositories/interfaces/CategoryRepository"
-import type { BankAccount } from "../Interfaces/BankAccount"
-import type { Category } from "../Interfaces/Category"
+import type { BankAccountRepository } from "@/repositories/interfaces/BankAccountRepository"
+import type { CategoryRepository } from "@/repositories/interfaces/CategoryRepository"
+import type { BankAccount } from "@/Interfaces/BankAccount"
+import type { Category } from "@/Interfaces/Category"
 
 export class ListBankAccountCategoriesUseCase {
   private bankAccountRepository: BankAccountRepository

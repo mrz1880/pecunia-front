@@ -1,9 +1,9 @@
-import type { BankAccountRepository } from "../repositories/interfaces/BankAccountRepository"
-import type { TransactionRepository } from "../repositories/interfaces/TransactionRepository"
+import type { BankAccountRepository } from "@/repositories/interfaces/BankAccountRepository"
+import type { TransactionRepository } from "@/repositories/interfaces/TransactionRepository"
 import type {
   AddedTransactionToBankAccount,
   AddTransactionToBankAccount,
-} from "../Interfaces/Transaction"
+} from "@/Interfaces/Transaction"
 import type { CategoryRepository } from "@/repositories/interfaces/CategoryRepository"
 
 export class AddTransactionToBankAccountUseCase {

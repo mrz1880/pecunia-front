@@ -1,9 +1,9 @@
-import type { BankAccountRepository } from "../repositories/interfaces/BankAccountRepository"
-import type { RecurrentTransactionRepository } from "../repositories/interfaces/RecurrentTransactionRepository"
+import type { BankAccountRepository } from "@/repositories/interfaces/BankAccountRepository"
+import type { RecurrentTransactionRepository } from "@/repositories/interfaces/RecurrentTransactionRepository"
 import type {
   AddedReccurentTransactionToBankAccount,
   AddReccurentTransactionToBankAccount,
-} from "../Interfaces/RecurrentTransaction"
+} from "@/Interfaces/RecurrentTransaction"
 import type { CategoryRepository } from "@/repositories/interfaces/CategoryRepository"
 
 export class AddRecurrentTransactionToBankAccountUseCase {

@@ -1,4 +1,4 @@
-import type { CreatedUser, CreateUser } from "../Interfaces/User"
+import type { CreatedUser, CreateUser } from "@/Interfaces/User"
 import type { UserRepository } from "@/repositories/interfaces/UserRepository"
 
 export class RegisterUserUseCase {
