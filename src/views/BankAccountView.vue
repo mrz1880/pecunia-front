@@ -74,8 +74,9 @@ onMounted(async () => {
     userRepository,
     bankAccountRepository
   )
+  const userId = await getUserIdFromToken()
   bankAccountsList.value = await listBankAccountUseCase.execute({
-    userId: await getUserIdFromToken(),
+    userId,
   })
 })
 const isFormValid = computed(() => !!nameSuccess.value)
