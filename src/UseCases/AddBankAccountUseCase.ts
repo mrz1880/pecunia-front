@@ -1,9 +1,6 @@
-import type { BankAccountRepository } from "../repositories/interfaces/BankAccountRepository"
-import type { UserRepository } from "../repositories/interfaces/UserRepository"
-import type {
-  AddBankAccount,
-  AddedBankAccount,
-} from "../Interfaces/BankAccount"
+import type { BankAccountRepository } from "@/repositories/interfaces/BankAccountRepository"
+import type { UserRepository } from "@/repositories/interfaces/UserRepository"
+import type { AddBankAccount, AddedBankAccount } from "@/Interfaces/BankAccount"
 
 export class AddBankAccountUseCase {
   private bankAccountRepository: BankAccountRepository

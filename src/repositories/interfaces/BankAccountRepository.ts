@@ -2,7 +2,7 @@ import type {
   AddBankAccount,
   AddedBankAccount,
   BankAccount,
-} from "../../Interfaces/BankAccount"
+} from "@/Interfaces/BankAccount"
 import type { User } from "@/Interfaces/User"
 
 export interface BankAccountRepository {
