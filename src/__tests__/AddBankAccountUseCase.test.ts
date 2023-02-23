@@ -2,6 +2,7 @@ import { InMemoryUserRepository } from "../repositories/InMemoryUserRepository"
 import { InMemoryBankAccountRepository } from "../repositories/InMemoryBankAccountRepository"
 import { AddBankAccountUseCase } from "../UseCases/AddBankAccountUseCase"
 
+console.log("node version", process.version)
 describe("Add Bank Account", () => {
   let userRepository: InMemoryUserRepository
   let bankAccountRepository: InMemoryBankAccountRepository
