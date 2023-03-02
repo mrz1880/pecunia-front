@@ -1,21 +1,21 @@
-name: Pull Request Tests
+name: Node.js Unit Tests on Push and Pull Requests
 
 on: [ push, pull_request ]
 jobs:
-  test:
+  nodejs-unit-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Set up Node.js environment
         uses: actions/setup-node@v3
         with:
           node-version-file: 'package.json'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies with npm
         run: npm ci
 
-      - name: Run tests
+      - name: Run unit tests with npm
         run: npm run test:unit
